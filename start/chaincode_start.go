@@ -67,23 +67,22 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 }
 
 //write function 
-func(t*SimpleChaincode) write(stub.ChaincodeStubInterface, args []string) ([]byte, error){
-	var name, value string
-    var err error
-    fmt.Println("running write()")
+func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var key, value string
+	var err error
+	fmt.Println("running write()")
 
-    if len(args) != 2 {
-        return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the variable and value to set")
-    }
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	}
 
-    name = args[0]                            //rename for fun
-    value = args[1]
-    err = stub.PutState(name, []byte(value))  //write the variable into the chaincode state
-    if err != nil {
-        return nil, err
-    }
-    return nil, nil
-
+	key = args[0]                            //rename for fun
+	value = args[1]
+	err = stub.PutState(key, []byte(value))  //write the variable into the chaincode state
+	if err != nil {
+		return nil, err
+	}
+	return nil, nil
 }
 
 // Query is our entry point for queries
